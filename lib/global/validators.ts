@@ -6,7 +6,7 @@ export const selectorValidator = (selector: CustomElementMetadata['selector']): 
 	if (splitted.length > 1 && isValidPosition) {
 		return true;
 	}
-	throw new Error('Invalid selector, should be kebab-case like `my-element`');
+	throw new Error(`Invalid selector <${selector}>, should be kebab-case like 'my-element'`);
 };
 
 export const templateValidator = (template: CustomElementMetadata['selector']) => {

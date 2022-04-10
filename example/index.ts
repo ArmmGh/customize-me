@@ -1,1 +1,3 @@
-import './my-input';
+import './components/flex-box';
+import './components/code-mirror';
+import './components/action-button';

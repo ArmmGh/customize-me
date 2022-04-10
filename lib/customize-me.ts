@@ -1,4 +1,4 @@
-import { ConstructorWithListeners, CustomElementMetadata, DecorateFunction, DecorateWrapper } from './global/types';
+import { CustomElementMetadata, DecorateFunction, DecorateWrapper } from './global/types';
 import { selectorValidator, templateValidator } from './global/validators';
 
 export const CustomizeMe: DecorateWrapper = ({ selector, template, useShadow, style }: CustomElementMetadata): DecorateFunction => {
@@ -9,7 +9,6 @@ export const CustomizeMe: DecorateWrapper = ({ selector, template, useShadow, st
 
 		const templateElement: HTMLTemplateElement = CustomizeMe.createTemplateWithStyles(template, style);
 		const connectedCallback: () => void = target.prototype.connectedCallback;
-
 		target.prototype.connectedCallback = function () {
 			const self = this as HTMLElement;
 			const clone: DocumentFragment = document.importNode(templateElement.content, true);
@@ -20,7 +19,6 @@ export const CustomizeMe: DecorateWrapper = ({ selector, template, useShadow, st
 				self.appendChild(clone);
 			}
 
-			CustomizeMe.attachEventListeners(this);
 			connectedCallback && connectedCallback.call(self);
 		};
 
@@ -32,7 +30,7 @@ export const CustomizeMe: DecorateWrapper = ({ selector, template, useShadow, st
 
 CustomizeMe.createTemplateWithStyles = function (template: string, style?: string): HTMLTemplateElement {
 	const templateElement: HTMLTemplateElement = document.createElement('template');
-	const styles = `<style>${style}</style>`;
+	const styles = `<style>${style || ''}</style>`;
 
 	templateElement.innerHTML = `${styles}${template}`;
 	return templateElement;
@@ -50,18 +48,4 @@ CustomizeMe.markCustomized = (target: CustomElementConstructor): void => {
 		configurable: false,
 		value: true
 	});
-};
-
-CustomizeMe.attachEventListeners = (target: HTMLElement & ConstructorWithListeners): void => {
-	const listeners = target.constructor?.listeners;
-	const root = target.shadowRoot || target;
-	if (listeners) {
-		for (const listener of listeners) {
-			const eventTarget = listener.selector ? root.querySelector(listener.selector) : root;
-
-			eventTarget?.addEventListener(listener.eventName, (event: Event) => {
-				listener.handler.call(target, event);
-			});
-		}
-	}
 };
