@@ -5,6 +5,7 @@ export type DecorateWrapper = {
     createTemplateWithStyles: (template: string, style?: string) => HTMLTemplateElement;
     validateMetadata: (selector: string, style: string) => void;
     markCustomized: (target: CustomElementConstructor) => void;
+    attachListeners: (target: HTMLElement & ConstructorWithListeners) => void;
 };
 export type CustomElementMetadata = {
     selector: string;
@@ -19,8 +20,21 @@ export type ListenerMetadata = {
 };
 
 export type ConstructorWithListeners = {
-    readonly _listeners: ListenerMetadata[];
-    readonly getListeners: () => ListenerMetadata[];
-    readonly setListener: (listener: ListenerMetadata) => void;
-    constructor: CustomElementConstructor;
+    constructor: CustomElementConstructor & {
+        readonly _listeners: ListenerMetadata[];
+        readonly getListeners: () => ListenerMetadata[];
+        readonly setListener: (listener: ListenerMetadata) => void;
+    };
+};
+
+export type DispatchDecorator = (event?: string, eventTarget?: EventTarget) => void;
+
+export type CustomEventOptions = {
+    bubbles?: boolean;
+    composed?: boolean;
+    detail?: unknown;
+};
+
+export type CustomEventMetadata = CustomEvent & {
+    emit: (options?: CustomEventOptions) => void;
 };
