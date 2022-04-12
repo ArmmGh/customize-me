@@ -53,8 +53,9 @@ CustomizeMe.markCustomized = (target: CustomElementConstructor): void => {
 CustomizeMe.attachListeners = (target: HTMLElement & ConstructorWithListeners) => {
     if (target.constructor.getListeners) {
         const listeners = target.constructor.getListeners() || [];
+        const root = target.shadowRoot || target;
         for (const listener of listeners) {
-            const eventTarget = listener.selector ? target.querySelector(listener.selector) : target;
+            const eventTarget = listener.selector ? root.querySelector(listener.selector) : root;
 
             eventTarget?.addEventListener(listener.eventName, (event: Event) => {
                 listener.handler.call(target, event);

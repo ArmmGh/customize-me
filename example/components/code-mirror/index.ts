@@ -7,7 +7,7 @@ import { CustomizeMe } from '../../../lib';
 
 @<span class='function'>CustomizeMe</span>({
   <span class='keyword'>selector</span>: <span class='string'>'flex-box'</span>,
-  <span class='keyword'>template</span>: <span class='string'>''</span>,
+  <span class='keyword'>template</span>: <span class='string'>''</span>, <span class='comment'>// add HTML here</span>
   <span class='keyword'>style</span>: <span class='string'>''</span>, <span class='comment'>// add styles here</span>
   <span class='keyword'>useShadow</span>: <span class='value'>true</span>
 })
@@ -15,6 +15,9 @@ import { CustomizeMe } from '../../../lib';
   <span class='reserved'>constructor</span>() {
     <span class='classname'>super</span>();
   }
+
+  @<span class='function'>Listen</span>(<span class='string'>'click'</span>)
+  <span class='classname'>onSubmitClick</span>(event: Event) {}
 }</pre>`,
     style: `
 		:host {
@@ -26,7 +29,6 @@ import { CustomizeMe } from '../../../lib';
 			--classname: rgb(229, 192, 123);
 			--comment: rgb(127 132 142);
 			--value: rgb(209 154 102);
-			border: 2px solid purple;
 			background-color: rgb(40, 44, 52);
 		}
 		:host pre {
