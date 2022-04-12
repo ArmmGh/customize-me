@@ -20,6 +20,6 @@ export class FlexBox extends HTMLElement {
 
     @Listen('install', 'action-button')
     onInstallButtonClick(event: Event) {
-        console.log('button click', event);
+        console.log(event);
     }
 }

@@ -1,7 +1,7 @@
-import { ConstructorWithListeners, CustomElementMetadata, DecorateFunction, DecorateWrapper } from './global/types';
+import { ConstructorWithListeners, CustomElementMetadata, DecorateFunction, ComponentDecorator } from './global/types';
 import { selectorValidator, templateValidator } from './global/validators';
 
-export const CustomizeMe: DecorateWrapper = ({ selector, template, useShadow, style }: CustomElementMetadata): DecorateFunction => {
+export const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style }: CustomElementMetadata): DecorateFunction => {
     CustomizeMe.validateMetadata(selector, template);
 
     return <T extends CustomElementConstructor>(target: T): void => {

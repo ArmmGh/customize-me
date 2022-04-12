@@ -1,10 +1,10 @@
-import { ListenerMetadata } from './global/types';
+import { ConstructorWithListeners, DecorateMethod, ListenDecorator, ListenerMetadata } from './global/types';
 
-export const Listen = (eventName: keyof GlobalEventHandlersEventMap | string, selector?: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return function (target: any, propertyKey: PropertyKey, descriptor: PropertyDescriptor) {
-        if (!target.constructor.getListeners) {
-            Object.defineProperties(target.constructor, {
+export const Listen: ListenDecorator = (eventName: keyof GlobalEventHandlersEventMap | string, selector?: string): DecorateMethod => {
+    return (target: unknown, _propertyKey: PropertyKey, descriptor: PropertyDescriptor) => {
+        const typedTarget = target as ConstructorWithListeners;
+        if (!typedTarget.constructor.getListeners) {
+            Object.defineProperties(typedTarget.constructor, {
                 _listeners: {
                     writable: true,
                     value: []
@@ -21,6 +21,6 @@ export const Listen = (eventName: keyof GlobalEventHandlersEventMap | string, se
                 }
             });
         }
-        target.constructor.setListener({ eventName, handler: descriptor.value, selector });
+        typedTarget.constructor.setListener({ eventName, handler: descriptor.value, selector });
     };
 };

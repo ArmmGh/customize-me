@@ -1,16 +1,16 @@
-import { CustomEventOptions, DispatchDecorator } from './global/types';
+import { CustomEventOptions, DecorateProperty, DispatchDecorator } from './global/types';
 
-export const Dispatch = (event: string, eventTarget?: EventTarget) => {
-    return (target: HTMLElement, propertyName: PropertyKey): void => {
+export const Dispatch: DispatchDecorator = (event: string, eventTarget?: EventTarget): DecorateProperty => {
+    return (target: unknown, propertyName: PropertyKey): void => {
         if (!event) {
             event = String(propertyName);
         }
-
         Object.defineProperty(target, propertyName, {
             get() {
+                const mainTarget = eventTarget || this;
                 return {
                     emit(options?: CustomEventOptions) {
-                        (eventTarget || this).dispatchEvent?.(new CustomEvent(event, options));
+                        mainTarget.dispatchEvent?.(new CustomEvent(event, { bubbles: true, ...options }));
                     }
                 };
             }
