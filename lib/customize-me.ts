@@ -9,6 +9,7 @@ export const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow,
 
         const templateElement: HTMLTemplateElement = CustomizeMe.createTemplateWithStyles(template, style);
         const connectedCallback: () => void = target.prototype.connectedCallback;
+
         target.prototype.connectedCallback = function () {
             const self = this as HTMLElement;
             const clone: DocumentFragment = document.importNode(templateElement.content, true);

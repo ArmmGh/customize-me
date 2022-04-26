@@ -1,22 +1,23 @@
-import { CustomizeMe, Listen } from '../../../lib';
+import { CustomizeMe, Prop } from '../../../lib';
 
 @CustomizeMe({
     selector: 'header-box',
     template: `
-        <h1>{{title}}</h1>
+        <h1>{{headTitle}}</h1>
         <p>{{message}}</p>
    `,
     style: ` 
     `,
     useShadow: true
 })
-export class ActionButton extends HTMLElement {
+export class HeaderBox extends HTMLElement {
     constructor() {
         super();
+        setTimeout(() => {
+            this.message = 'Test';
+        }, 1500);
     }
 
-    @Listen('click')
-    onButtonClick() {
-        window.open('https://github.com/ArmmGh/customize-me', '_blank');
-    }
+    @Prop()
+    message!: string;
 }

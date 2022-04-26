@@ -21,21 +21,20 @@ export class FlexBox extends HTMLElement {
     static row = 'row';
     static column = 'column';
 
-    connectedCallback() {
-        console.dir(this.attributes);
-    }
-
-    attributeChangedCallback(name: unknown) {
-        if (name === FlexBox.column) {
-            this.style.flexDirection = 'column';
-        } else if (name === FlexBox.row) {
-            this.style.flexDirection = 'row';
+    attributeChangedCallback(attrName: string) {
+        switch (attrName) {
+            case FlexBox.column:
+                this.style.flexDirection = 'column';
+                break;
+            case FlexBox.row:
+                this.style.flexDirection = 'row';
+                break;
+            default:
+                break;
         }
     }
 
     static get observedAttributes() {
-        console.log('A');
-
         return [FlexBox.column, FlexBox.row];
     }
 
