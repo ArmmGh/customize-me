@@ -2,13 +2,15 @@ export type DecorateFunction = <T extends CustomElementConstructor>(target: T) =
 export type DecorateProperty = (target: unknown, propertyName: PropertyKey) => void;
 export type DecorateMethod = (target: unknown, propertyName: PropertyKey, descriptor: PropertyDescriptor) => void;
 
-export type ComponentDecorator = {
-    (metadata: CustomElementMetadata): DecorateFunction;
-    createTemplateWithStyles: (template: string, style?: string) => HTMLTemplateElement;
+export type ComponentDecorator = (metadata: CustomElementMetadata) => DecorateFunction;
+export type MetaClass = {
+    readonly __customized: boolean;
     validateMetadata: (selector: string, style: string) => void;
-    markCustomized: (target: CustomElementConstructor) => void;
     attachListeners: (target: HTMLElement & ConstructorWithListeners) => void;
+    createTemplateWithStyles: (template: string, style?: string) => HTMLTemplateElement;
 };
+// markCustomized: (target: CustomElementConstructor) => void;
+
 export type DispatchDecorator = (event: string, eventTarget?: EventTarget) => DecorateProperty;
 export type ListenDecorator = (eventName: keyof GlobalEventHandlersEventMap | string, selector?: string) => DecorateMethod;
 

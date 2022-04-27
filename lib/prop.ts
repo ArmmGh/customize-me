@@ -14,15 +14,18 @@ export const Prop = () => {
 
         const attributeChangedCallback = target.constructor.prototype.attributeChangedCallback;
         target.constructor.prototype.attributeChangedCallback = function (attribute: string, oldValue: any, newValue: any) {
-            console.log('THIS', this.message);
-            if (!this.attribute) {
+            if (!this[attribute]) {
                 Object.defineProperty(this, attribute, {
-                    set(v) {
-                        console.log('v', v);
+                    set(value) {
+                        this[`_${attribute}`] = value;
+                        console.log('v', value);
+                    },
+                    get() {
+                        return this[`_${attribute}`];
                     }
                 });
             }
-            console.log(`Changes [${attribute}]='${newValue}'`);
+            console.log(`Changes [${attribute}]='${this[attribute]}'`);
             attributeChangedCallback && attributeChangedCallback.call(this);
         };
     };
