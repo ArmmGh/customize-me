@@ -1,51 +1,35 @@
-import { ConstructorWithListeners, CustomElementMetadata, DecorateFunction, ComponentDecorator, MetaClass } from './global/types';
+import { ConstructorWithListeners, CustomElementMetadata, DecorateClass, ComponentDecorator } from './global/types';
 import { selectorValidator, templateValidator } from './global/validators';
 
-export const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style }: CustomElementMetadata): DecorateFunction => {
-    return <T extends CustomElementConstructor>(target: T): any => {
-        const customElement = class extends (target as { new (): any }) implements MetaClass {
-            __customized = false;
-
+export const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style }: CustomElementMetadata): DecorateClass => {
+    return (target) => {
+        const customElement = class extends (target as unknown as { new (): any }) {
             constructor() {
                 super();
             }
 
             connectedCallback() {
                 this.validateMetadata(selector, template);
-                this.__render();
-
-                // CustomizeMe.markCustomized(target);
-                console.log(this.__customized);
-
-                const self = this as unknown as HTMLElement;
-                this.attachListeners(self as unknown as any);
+                this.attachListeners();
+                this.render();
                 super.connectedCallback && super.connectedCallback();
             }
 
-            private __render() {
-                const templateElement: HTMLTemplateElement = this.createTemplateWithStyles(template, style);
-                const clone: DocumentFragment = document.importNode(templateElement.content, true);
-                if (useShadow) {
-                    this.attachShadow({ mode: 'open' }).appendChild(clone);
-                } else {
-                    this.appendChild(clone);
-                }
-            }
-
-            private createTemplateWithStyles = (template: string, style?: string): HTMLTemplateElement => {
+            private createTemplateWithStyles(template: string, style?: string): HTMLTemplateElement {
                 const templateElement: HTMLTemplateElement = document.createElement('template');
                 const styles = `<style>${style || ''}</style>`;
 
                 templateElement.innerHTML = `${styles}${template}`;
                 return templateElement;
-            };
+            }
 
-            private validateMetadata = (selector: string, template: string): void => {
+            private validateMetadata(selector: string, template: string): void {
                 selectorValidator(selector);
                 templateValidator(template);
-            };
+            }
 
-            private attachListeners = (target: HTMLElement & ConstructorWithListeners) => {
+            private attachListeners(): void {
+                const target = this as unknown as HTMLElement & ConstructorWithListeners;
                 if (target.constructor.getListeners) {
                     const listeners = target.constructor.getListeners() || [];
                     const root = target.shadowRoot || target;
@@ -57,21 +41,18 @@ export const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow,
                         });
                     }
                 }
-            };
+            }
+
+            private render() {
+                const templateElement: HTMLTemplateElement = this.createTemplateWithStyles(template, style);
+                const copyOfTemplate: DocumentFragment = document.importNode(templateElement.content, true);
+                const context = useShadow ? this.attachShadow({ mode: 'open' }) : this;
+                context.appendChild(copyOfTemplate);
+            }
         };
 
         if (!customElements.get(selector)) {
             customElements.define(selector, customElement as unknown as CustomElementConstructor);
         }
-        return customElement;
     };
 };
-
-// CustomizeMe.markCustomized = (target: CustomElementConstructor): void => { TODO add to static prop __customized decorator @Froze
-//     Object.defineProperty(target, '__customized__', {
-//         writable: false,
-//         enumerable: false,
-//         configurable: false,
-//         value: true
-//     });
-// };

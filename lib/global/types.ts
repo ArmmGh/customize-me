@@ -1,18 +1,12 @@
-export type DecorateFunction = <T extends CustomElementConstructor>(target: T) => void;
-export type DecorateProperty = (target: unknown, propertyName: PropertyKey) => void;
-export type DecorateMethod = (target: unknown, propertyName: PropertyKey, descriptor: PropertyDescriptor) => void;
-
-export type ComponentDecorator = (metadata: CustomElementMetadata) => DecorateFunction;
-export type MetaClass = {
-    readonly __customized: boolean;
-    validateMetadata: (selector: string, style: string) => void;
-    attachListeners: (target: HTMLElement & ConstructorWithListeners) => void;
-    createTemplateWithStyles: (template: string, style?: string) => HTMLTemplateElement;
-};
-// markCustomized: (target: CustomElementConstructor) => void;
-
+export type ComponentDecorator = (metadata: CustomElementMetadata) => DecorateClass;
 export type DispatchDecorator = (event: string, eventTarget?: EventTarget) => DecorateProperty;
 export type ListenDecorator = (eventName: keyof GlobalEventHandlersEventMap | string, selector?: string) => DecorateMethod;
+export type PropertyDecorator = () => DecorateProperty;
+
+type CommonDecorateFunction<T> = (target: T, propertyName?: PropertyKey, descriptor?: PropertyDescriptor) => void;
+export type DecorateClass = CommonDecorateFunction<CustomElementConstructor>;
+export type DecorateProperty = CommonDecorateFunction<unknown>;
+export type DecorateMethod = CommonDecorateFunction<ConstructorWithListeners>;
 
 export type CustomElementMetadata = {
     selector: string;
@@ -26,6 +20,14 @@ export type ListenerMetadata = {
     handler: (e: Event | CustomEvent) => void;
 };
 
+export type ConstructorWithAttributes = {
+    constructor: CustomElementConstructor &
+        HTMLElement & {
+            $attrs: string[];
+            readonly observedAttributes: () => string[];
+        };
+};
+
 export type ConstructorWithListeners = {
     constructor: CustomElementConstructor & {
         readonly _listeners: ListenerMetadata[];
@@ -33,7 +35,6 @@ export type ConstructorWithListeners = {
         readonly setListener: (listener: ListenerMetadata) => void;
     };
 };
-
 export type CustomEventOptions = {
     bubbles?: boolean;
     composed?: boolean;

@@ -22,7 +22,7 @@ export class HeaderBox extends HTMLElement {
     }
 
     connectedCallback() {
-        console.dir(this.message);
+        // console.dir(this.message);
     }
 
     @Prop()

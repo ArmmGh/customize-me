@@ -1,5 +1,7 @@
-export const Prop = () => {
-    return (target: any, propertyKey: string) => {
+import { ConstructorWithAttributes, DecorateProperty, PropertyDecorator } from './global/types';
+
+export const Prop: PropertyDecorator = (): DecorateProperty => {
+    return <T extends ConstructorWithAttributes>(target: T, propertyKey: string) => {
         if (!target.constructor.$attrs) {
             target.constructor.$attrs = [];
         }
@@ -13,19 +15,19 @@ export const Prop = () => {
         }
 
         const attributeChangedCallback = target.constructor.prototype.attributeChangedCallback;
-        target.constructor.prototype.attributeChangedCallback = function (attribute: string, oldValue: any, newValue: any) {
+        target.constructor.prototype.attributeChangedCallback = function (attribute: string) {
             if (!this[attribute]) {
                 Object.defineProperty(this, attribute, {
                     set(value) {
                         this[`_${attribute}`] = value;
-                        console.log('v', value);
+                        // console.log('v', value);
                     },
                     get() {
                         return this[`_${attribute}`];
                     }
                 });
             }
-            console.log(`Changes [${attribute}]='${this[attribute]}'`);
+            // console.log(`Changes [${attribute}]='${this[attribute]}'`);
             attributeChangedCallback && attributeChangedCallback.call(this);
         };
     };

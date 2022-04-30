@@ -1,10 +1,9 @@
-import { ConstructorWithListeners, DecorateMethod, ListenDecorator, ListenerMetadata } from './global/types';
+import { DecorateMethod, ListenDecorator, ListenerMetadata } from './global/types';
 
 export const Listen: ListenDecorator = (eventName: keyof GlobalEventHandlersEventMap | string, selector?: string): DecorateMethod => {
-    return (target: unknown, _propertyKey: PropertyKey, descriptor: PropertyDescriptor) => {
-        const typedTarget = target as ConstructorWithListeners;
-        if (!typedTarget.constructor.getListeners) {
-            Object.defineProperties(typedTarget.constructor, {
+    return (target, _propertyKey: PropertyKey, descriptor: PropertyDescriptor) => {
+        if (!target.constructor.getListeners) {
+            Object.defineProperties(target.constructor, {
                 _listeners: {
                     writable: true,
                     value: []
@@ -21,6 +20,6 @@ export const Listen: ListenDecorator = (eventName: keyof GlobalEventHandlersEven
                 }
             });
         }
-        typedTarget.constructor.setListener({ eventName, handler: descriptor.value, selector });
+        target.constructor.setListener({ eventName, handler: descriptor.value, selector });
     };
 };
