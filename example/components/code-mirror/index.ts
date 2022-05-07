@@ -6,9 +6,9 @@ import { CustomizeMe } from '../../../lib';
 <span class='reserved'>import</span> { <span class='keyword'>CustomizeMe</span> } <span class='reserved'>from</span> <span class='string'>'customize-me'</span>;
 
 @<span class='function'>CustomizeMe</span>({
-  <span class='keyword'>selector</span>: <span class='string'>'flex-box'</span>,
-  <span class='keyword'>template</span>: <span class='string'>''</span>, <span class='comment'>// add HTML here</span>
-  <span class='keyword'>style</span>: <span class='string'>''</span>, <span class='comment'>// add styles here</span>
+  <span class='keyword'>selector</span>: <span class='string'>'action-button'</span>,
+  <span class='keyword'>template</span>: <span class='string'>''</span>, <span class='comment'>// HTML here</span>
+  <span class='keyword'>style</span>: <span class='string'>''</span>, <span class='comment'>// styles here</span>
   <span class='keyword'>useShadow</span>: <span class='value'>true</span>
 })
 <span class='reserved'>export</span> <span class='reserved'>class</span> <span class='classname'>FlexBox</span> <span class='reserved'>extends</span> <span class='classname'>HTMLElement</span> {
@@ -30,6 +30,9 @@ import { CustomizeMe } from '../../../lib';
 			--comment: rgb(127 132 142);
 			--value: rgb(209 154 102);
 			background-color: rgb(40, 44, 52);
+            border-radius: 8px;
+            overflow: auto;
+            flex: 45;
 		}
 		:host pre {
 			font-size: 17px;

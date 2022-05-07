@@ -7,11 +7,13 @@ import { CustomizeMe, Prop, Watch } from '../../../lib';
    `,
    style: `
         h1 {
+            margin: 40px;
             color: rgb(40, 44, 52);
             font-weight: 500;
             letter-spacing: .2rem;
-            font-size: 35px;
+            font-size: 45px;
             text-shadow: 0px -2px 2px #282c3496;
+            text-align: center;
         }
    `,
     useShadow: true

@@ -6,10 +6,8 @@ import { CustomizeMe } from '../../../lib';
     style: `
         :host {
             display: flex;
-            align-items: center;
+            align-items: stretch;
             justify-content: center;
-        }
-        :host.info {
         }
     `,
     useShadow: true

@@ -4,6 +4,9 @@ import { CustomizeMe, Listen } from '../../../lib';
     selector: 'action-button',
     template: '<button>npm install</button>',
     style: `
+    :host {
+        margin-top: 25px;
+    }
     button,
     button:after {
         font-family: 'Montserrat Alternates', sans-serif;
@@ -105,7 +108,7 @@ export class ActionButton extends HTMLElement {
         super();
     }
 
-    @Listen('click')
+    @Listen('click', 'button')
     onButtonClick() {
         window.open('https://github.com/ArmmGh/customize-me', '_blank');
     }
