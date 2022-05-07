@@ -1,4 +1,4 @@
-import { CustomizeMe, Listen } from '../../../lib';
+import { CustomizeMe } from '../../../lib';
 
 @CustomizeMe({
     selector: 'flex-box',
@@ -36,10 +36,5 @@ export class FlexBox extends HTMLElement {
 
     static get observedAttributes() {
         return [FlexBox.column, FlexBox.row];
-    }
-
-    @Listen('install', 'action-button')
-    onInstallButtonClick(event: Event) {
-        console.log(event);
     }
 }

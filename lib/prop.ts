@@ -1,34 +1,25 @@
-import { ConstructorWithAttributes, DecorateProperty, PropertyDecorator } from './global/types';
+import { ConstructorWithProps, ConstructorWithWatchers, DecorateProperty, PropertyDecorator } from './global/types';
+import { propertyValidator } from './global/validators';
 
 export const Prop: PropertyDecorator = (): DecorateProperty => {
-    return <T extends ConstructorWithAttributes>(target: T, propertyKey: string) => {
-        if (!target.constructor.$attrs) {
-            target.constructor.$attrs = [];
-        }
-        target.constructor.$attrs.push(propertyKey);
-        if (!target.constructor.observedAttributes) {
-            Object.defineProperty(target.constructor, 'observedAttributes', {
-                get() {
-                    return [...target.constructor.$attrs];
-                }
-            });
+    return <T extends ConstructorWithProps & ConstructorWithWatchers>(target: T, propertyKey: string) => {
+        if (!target.constructor.$props) {
+            target.constructor.$props = [];
         }
 
-        const attributeChangedCallback = target.constructor.prototype.attributeChangedCallback;
-        target.constructor.prototype.attributeChangedCallback = function (attribute: string) {
-            if (!this[attribute]) {
-                Object.defineProperty(this, attribute, {
-                    set(value) {
-                        this[`_${attribute}`] = value;
-                        // console.log('v', value);
-                    },
-                    get() {
-                        return this[`_${attribute}`];
-                    }
-                });
+        const prop = target.constructor.$props.find((prop) => prop.name === propertyKey);
+        propertyValidator(prop);
+
+        target.constructor.$props.push({ name: propertyKey, value: target.constructor[propertyKey] });
+        Object.defineProperty(target, propertyKey, {
+            set(value) {
+                const watcher = target.constructor.watchers.find((watcher) => watcher.name === propertyKey);
+                target[`{{${propertyKey}}}`] = value;
+                watcher.effect.call(target, value);
+            },
+            get() {
+                return target[`{{${propertyKey}}}`];
             }
-            // console.log(`Changes [${attribute}]='${this[attribute]}'`);
-            attributeChangedCallback && attributeChangedCallback.call(this);
-        };
+        });
     };
 };

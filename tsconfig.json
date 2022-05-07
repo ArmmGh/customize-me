@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"strict": true,
 		"allowJs": true,
 		"experimentalDecorators": true,
 		"target": "es2015",

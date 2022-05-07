@@ -1,7 +1,7 @@
-import { CustomEventOptions, DecorateProperty, DispatchDecorator } from './global/types';
+import { CustomEventOptions, DecorateDispatcher, DispatchDecorator } from './global/types';
 
-export const Dispatch: DispatchDecorator = (event: string, eventTarget?: EventTarget): DecorateProperty => {
-    return (target: unknown, propertyName: PropertyKey): void => {
+export const Dispatch: DispatchDecorator = (event: string, eventTarget?: EventTarget): DecorateDispatcher => {
+    return (target, propertyName): void => {
         if (!event) {
             event = String(propertyName);
         }

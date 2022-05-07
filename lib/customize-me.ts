@@ -3,7 +3,8 @@ import { selectorValidator, templateValidator } from './global/validators';
 
 export const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style }: CustomElementMetadata): DecorateClass => {
     return (target) => {
-        const customElement = class extends (target as unknown as { new (): any }) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const customElement = class extends (target as { new (): any }) {
             constructor() {
                 super();
             }

@@ -1,18 +1,57 @@
-export type ComponentDecorator = (metadata: CustomElementMetadata) => DecorateClass;
-export type DispatchDecorator = (event: string, eventTarget?: EventTarget) => DecorateProperty;
-export type ListenDecorator = (eventName: keyof GlobalEventHandlersEventMap | string, selector?: string) => DecorateMethod;
-export type PropertyDecorator = () => DecorateProperty;
-
-type CommonDecorateFunction<T> = (target: T, propertyName?: PropertyKey, descriptor?: PropertyDescriptor) => void;
-export type DecorateClass = CommonDecorateFunction<CustomElementConstructor>;
-export type DecorateProperty = CommonDecorateFunction<unknown>;
-export type DecorateMethod = CommonDecorateFunction<ConstructorWithListeners>;
-
+/* Meta */
 export type CustomElementMetadata = {
     selector: string;
     template: string;
     style?: string;
     useShadow?: boolean;
+};
+
+/* Decorators */
+export type ComponentDecorator = (metadata: CustomElementMetadata) => DecorateClass;
+export type DispatchDecorator = (event: string, eventTarget?: EventTarget) => DecorateDispatcher;
+export type ListenDecorator = (eventName: keyof GlobalEventHandlersEventMap | string, selector?: string) => DecorateMethod;
+export type WatcherDecorator = (Prop: PropertyKey) => DecorateWatcher;
+export type PropertyDecorator = () => DecorateProperty;
+
+type CommonDecorateFunction<T> = (target: T | unknown, propertyName?: PropertyKey, descriptor?: PropertyDescriptor) => void;
+export type DecorateClass = CommonDecorateFunction<CustomElementConstructor>;
+export type DecorateProperty = CommonDecorateFunction<ConstructorWithProps & ConstructorWithWatchers>;
+export type DecorateDispatcher = CommonDecorateFunction<unknown>;
+export type DecorateMethod = CommonDecorateFunction<ConstructorWithListeners>;
+export type DecorateWatcher = CommonDecorateFunction<ConstructorWithWatchers>;
+
+/* Watcher */
+export type ConstructorWithWatchers = {
+    constructor: CustomElementConstructor &
+        HTMLElement & {
+            watchers: watcher[];
+        };
+};
+export type watcher = {
+    name: PropertyKey;
+    effect: (value: unknown) => unknown;
+};
+
+/* Prop */
+export type ConstructorWithProps = {
+    constructor: CustomElementConstructor &
+        HTMLElement & {
+            $props: $Prop[];
+        };
+};
+export type $Prop = {
+    name: string;
+    value: unknown;
+};
+
+/* Listen */
+export type ConstructorWithListeners = {
+    constructor: CustomElementConstructor &
+        HTMLElement & {
+            readonly _listeners: ListenerMetadata[];
+            readonly getListeners: () => ListenerMetadata[];
+            readonly setListener: (listener: ListenerMetadata) => void;
+        };
 };
 export type ListenerMetadata = {
     selector?: string;
@@ -20,27 +59,12 @@ export type ListenerMetadata = {
     handler: (e: Event | CustomEvent) => void;
 };
 
-export type ConstructorWithAttributes = {
-    constructor: CustomElementConstructor &
-        HTMLElement & {
-            $attrs: string[];
-            readonly observedAttributes: () => string[];
-        };
-};
-
-export type ConstructorWithListeners = {
-    constructor: CustomElementConstructor & {
-        readonly _listeners: ListenerMetadata[];
-        readonly getListeners: () => ListenerMetadata[];
-        readonly setListener: (listener: ListenerMetadata) => void;
-    };
-};
+/* Custom events */
 export type CustomEventOptions = {
     bubbles?: boolean;
     composed?: boolean;
     detail?: unknown;
 };
-
 export type CustomEventMetadata = {
     emit: (options?: CustomEventOptions) => void;
 };
