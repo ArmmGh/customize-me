@@ -1,21 +1,27 @@
 {
 	"name": "customize-me",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"description": "Small lib for customizing custom web components",
-	"main": "index.js",
+	"main": "lib/index.js",
+	"files": [
+		"lib/**/*.ts"
+	],
+	"types": "lib/index.d.ts",
 	"author": "Arman",
 	"license": "MIT",
 	"scripts": {
-		"lint": "eslint ./lib ./example",
+		"lint": "eslint ./src ./example",
 		"start": "webpack-dev-server --config webpack.dev.js",
 		"build": "yarn lint & webpack --config webpack.prod.js"
 	},
 	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.17.0",
 		"@typescript-eslint/parser": "^5.17.0",
 		"clean-webpack-plugin": "^4.0.0",
 		"css-loader": "^6.7.1",
 		"eslint": "^8.12.0",
 		"html-webpack-plugin": "^5.5.0",
+		"node-sass": "^7.0.1",
 		"sass-loader": "^12.6.0",
 		"style-loader": "^3.3.1",
 		"ts-loader": "^9.2.8",
@@ -25,9 +31,5 @@
 		"webpack-dev-server": "^4.7.4",
 		"webpack-merge": "^5.8.0"
 	},
-	"type": "module",
-	"dependencies": {
-		"@typescript-eslint/eslint-plugin": "^5.17.0",
-		"node-sass": "^7.0.1"
-	}
+	"type": "module"
 }

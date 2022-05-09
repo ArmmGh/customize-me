@@ -1,14 +1,4 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import path from 'path';
-
 export default {
-	entry: {
-		example: './example/index.ts'
-	},
-	output: {
-		filename: '[name].bundle.js',
-		path: path.resolve(path.dirname('dist'))
-	},
 	module: {
 		rules: [
 			{
@@ -26,10 +16,4 @@ export default {
 	resolve: {
 		extensions: ['.ts', '.js', '.css', '.scss']
 	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: './example/index.html',
-			inject: 'body'
-		})
-	]
 };

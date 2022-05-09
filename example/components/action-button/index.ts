@@ -1,10 +1,13 @@
-import { CustomizeMe, Listen } from '../../../lib';
+import { CustomizeMe, Dispatch, Listen } from '../../../src';
+import { EventEmitter } from '../../../src/global/types';
 
 @CustomizeMe({
     selector: 'action-button',
     template: '<button>npm install</button>',
     style: `
     :host {
+        width: 250px;
+        margin: 0 auto;
         margin-top: 25px;
     }
     button,
@@ -108,8 +111,11 @@ export class ActionButton extends HTMLElement {
         super();
     }
 
-    @Listen('click', 'button')
+    @Listen('click')
     onButtonClick() {
-        window.open('https://github.com/ArmmGh/customize-me', '_blank');
+        this.onInstall.emit();
     }
+
+    @Dispatch('onInstall', document.getElementById('info-box'))
+    onInstall: EventEmitter;
 }

@@ -1,4 +1,4 @@
-import { CustomizeMe, Prop, Watch } from '../../../lib';
+import { CustomizeMe, Prop, Watch } from '../../../src';
 
 @CustomizeMe({
     selector: 'header-box',

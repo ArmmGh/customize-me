@@ -7,7 +7,11 @@ export type CustomElementMetadata = {
 };
 
 /* Decorators */
+/**
+ * @param metadata this function does Stuff
+ */
 export type ComponentDecorator = (metadata: CustomElementMetadata) => DecorateClass;
+
 export type DispatchDecorator = (event: string, eventTarget?: EventTarget) => DecorateDispatcher;
 export type ListenDecorator = (eventName: keyof GlobalEventHandlersEventMap | string, selector?: string) => DecorateMethod;
 export type WatcherDecorator = (Prop: PropertyKey) => DecorateWatcher;
@@ -65,6 +69,6 @@ export type CustomEventOptions = {
     composed?: boolean;
     detail?: unknown;
 };
-export type CustomEventMetadata = {
+export type EventEmitter = {
     emit: (options?: CustomEventOptions) => void;
 };

@@ -1,4 +1,4 @@
-import { CustomizeMe } from '../../../lib';
+import { CustomizeMe } from '../../../src';
 
 @CustomizeMe({
     selector: 'flex-box',

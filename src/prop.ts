@@ -15,7 +15,7 @@ export const Prop: PropertyDecorator = (): DecorateProperty => {
             set(value) {
                 const watcher = target.constructor.watchers.find((watcher) => watcher.name === propertyKey);
                 target[`{{${propertyKey}}}`] = value;
-                watcher.effect.call(target, value);
+                watcher && watcher.effect.call(target, value);
             },
             get() {
                 return target[`{{${propertyKey}}}`];

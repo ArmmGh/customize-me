@@ -1,4 +1,4 @@
-import { CustomizeMe } from '../../../lib';
+import { CustomizeMe, Listen } from '../../../src';
 
 @CustomizeMe({
     selector: 'info-box',
@@ -42,5 +42,10 @@ import { CustomizeMe } from '../../../lib';
 export class InfoBox extends HTMLElement {
     constructor() {
         super();
+    }
+
+    @Listen('onInstall')
+    handleInstallEvent() {
+        window.open('https://github.com/ArmmGh/customize-me', '_blank');
     }
 }
