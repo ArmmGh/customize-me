@@ -19,15 +19,14 @@ import { CustomizeMe } from 'customize-me';
   style: ` :host { color: #333 }`
 })
 export class ActionButton extends HTMLElement {
- 	// full source code is at example/action-button
-	constructor() {
-        super();
-    }
-
-    @Listen('click')
-    onButtonClick() {
-        // Do some actions
-    }
+  // full source code is at example/action-button
+  constructor() {
+      super();
+  }  
+  @Listen('click')
+  onButtonClick() {
+    // Do some actions
+  }
 }
 ```
 Add your file wth custom element into HTML file or Import in your Main JS file
@@ -65,13 +64,13 @@ import { CustomizeMe, Prop, Watch } from 'customize-me';
   ...
 })
 export class HeaderBox extends HTMLElement {
-	@Watch('message')
-	onMessageChange(value: string) {
-	    console.log('Message changed ->', value);
-	}
+  @Watch('message')
+  onMessageChange(value: string) {
+    console.log('Message changed ->', value);
+  }
 
-	@Prop()
-	public message = 'Hola';
+  @Prop()
+  public message = 'Hola';
 }
 ```
 
@@ -84,12 +83,12 @@ import { CustomizeMe, Dispatch, Listen } from 'customize-me';
 import { EventEmitter } from 'customize-me/global/types';
 ...
 export class ActionButton extends HTMLElement {
-	// Creating a CustomEvent named  `onInstall`
-	@Dispatch('onInstall', document.getElementById('info-box'))
-	installEvent: EventEmitter;
-  	
-	// Creating a CustomEvent with name `onHover`, property name by default 
-   @Dispatch() onHover: EventEmitter;
+  // Creating a CustomEvent named  `onInstall`
+  @Dispatch('onInstall', document.getElementById('info-box'))
+  installEvent: EventEmitter;
+  
+  // Creating a CustomEvent with name `onHover`, property name by default 
+  @Dispatch() onHover: EventEmitter;
 }
 ```
 **Triggering the custom event** from the example above:
