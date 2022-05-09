@@ -3,17 +3,26 @@
 	"version": "0.0.2",
 	"description": "Small lib for customizing custom web components",
 	"main": "lib/index.js",
+	"module": "lib/index.js",
 	"files": [
-		"lib/**/*.ts"
+		"lib/**/*"
 	],
 	"types": "lib/index.d.ts",
-	"author": "Arman",
+	"author": "Arman Ghazaryan",
 	"license": "MIT",
 	"scripts": {
 		"lint": "eslint ./src ./example",
 		"start": "webpack-dev-server --config webpack.dev.js",
 		"build": "yarn lint & webpack --config webpack.prod.js"
 	},
+    "keywords": [
+        "typescript",
+        "custom-component",
+        "web-component",
+        "custom-components",
+        "web-components",
+        "customize-component"
+    ],
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^5.17.0",
 		"@typescript-eslint/parser": "^5.17.0",

@@ -14,5 +14,5 @@
 		"removeComments": true,
 		"target": "es6"
 	},
-	"include": ["./*.ts"]
+	"include": ["./*.ts", "index.ts"]
 }

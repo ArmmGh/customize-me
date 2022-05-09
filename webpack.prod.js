@@ -6,12 +6,12 @@ import path from 'path';
 export default merge(
     {
         mode: 'production',
-        entry: './src/index.ts',
+        entry: './src',
         output: {
             path: path.resolve('lib'),
             filename: 'index.js',
             library: '$',
-            libraryTarget: 'umd'
+            libraryTarget: 'commonjs2'// 'umd'
         },
 
         plugins: [new CleanWebpackPlugin()]
