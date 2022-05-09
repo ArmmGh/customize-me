@@ -1,7 +1,7 @@
 import { ConstructorWithProps, ConstructorWithWatchers, DecorateProperty, PropertyDecorator } from './global/types';
 import { propertyValidator } from './global/validators';
 
-export const Prop: PropertyDecorator = (): DecorateProperty => {
+const Prop: PropertyDecorator = (): DecorateProperty => {
     return <T extends ConstructorWithProps & ConstructorWithWatchers>(target: T, propertyKey: string) => {
         if (!target.constructor.$props) {
             target.constructor.$props = [];
@@ -23,3 +23,5 @@ export const Prop: PropertyDecorator = (): DecorateProperty => {
         });
     };
 };
+
+export default Prop;

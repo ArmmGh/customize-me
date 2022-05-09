@@ -14,7 +14,7 @@ export default merge(common, {
     mode: 'development',
     devtool: 'inline-source-map',
     devServer: {
-        static: './dist'
+        static: './lib'
     },
     plugins: [
         new HtmlWebpackPlugin({
