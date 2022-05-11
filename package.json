@@ -13,7 +13,9 @@
 	"scripts": {
 		"lint": "eslint ./src ./example",
 		"start": "webpack-dev-server --config webpack.dev.js",
-		"build": "yarn lint & webpack --config webpack.prod.js"
+		"build": "yarn build:types && yarn build:js",
+		"build:types": "tsc --project ./src/tsconfig.json --emitDeclarationOnly",
+		"build:js": "./node_modules/.bin/babel src --out-dir lib --extensions \".ts\" --source-maps inline"
 	},
 	"keywords": [
 		"typescript",
@@ -24,9 +26,16 @@
 		"customize-component"
 	],
 	"devDependencies": {
+		"@babel/cli": "^7.17.10",
+		"@babel/core": "^7.17.10",
+		"@babel/plugin-proposal-decorators": "^7.17.9",
+		"@babel/preset-env": "^7.17.10",
+		"@babel/preset-typescript": "^7.16.7",
 		"@typescript-eslint/eslint-plugin": "^5.17.0",
 		"@typescript-eslint/parser": "^5.17.0",
+		"babel-loader": "^8.2.5",
 		"clean-webpack-plugin": "^4.0.0",
+		"core-js": "3",
 		"css-loader": "^6.7.1",
 		"eslint": "^8.12.0",
 		"html-webpack-plugin": "^5.5.0",
