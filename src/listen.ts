@@ -1,7 +1,7 @@
-import { ConstructorWithListeners, DecorateMethod, ListenDecorator, ListenerMetadata } from './global/types';
+import { ConstructorWithListeners, ListenDecorator, ListenerMetadata } from './global/types';
 
-const Listen: ListenDecorator = (eventName: keyof GlobalEventHandlersEventMap | string, selector?: string): DecorateMethod => {
-    return (target: ConstructorWithListeners, _propertyName: PropertyKey, descriptor: PropertyDescriptor) => {
+const Listen: ListenDecorator = (eventName, selector?) => {
+    return (target: ConstructorWithListeners, _propertyName, descriptor) => {
         if (!target.constructor.getListeners) {
             Object.defineProperties(target.constructor, {
                 _listeners: {

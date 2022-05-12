@@ -1,7 +1,7 @@
-import { ConstructorWithProps, ConstructorWithWatchers, DecorateProperty, PropertyDecorator } from './global/types';
+import { ConstructorWithProps, ConstructorWithWatchers, PropertyDecorator } from './global/types';
 import { propertyValidator } from './global/validators';
 
-const Prop: PropertyDecorator = (): DecorateProperty => {
+const Prop: PropertyDecorator = () => {
     return <T extends ConstructorWithProps & ConstructorWithWatchers>(target: T, propertyKey: string) => {
         if (!target.constructor.$props) {
             target.constructor.$props = [];

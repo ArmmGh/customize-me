@@ -1,6 +1,6 @@
-import { ConstructorWithWatchers, DecorateWatcher, WatcherDecorator } from './global/types';
+import { ConstructorWithWatchers, WatcherDecorator } from './global/types';
 
-const Watch: WatcherDecorator = (Prop: PropertyKey): DecorateWatcher => {
+const Watch: WatcherDecorator = (Prop: PropertyKey) => {
     return (target: ConstructorWithWatchers, _property, descriptor) => {
         if (!target.constructor.watchers?.length) {
             target.constructor.watchers = [];

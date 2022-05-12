@@ -1,7 +1,7 @@
-import { ConstructorWithListeners, CustomElementMetadata, DecorateClass, ComponentDecorator } from './global/types';
+import { ConstructorWithListeners, ComponentDecorator } from './global/types';
 import { selectorValidator, templateValidator } from './global/validators';
 
-const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style }: CustomElementMetadata): DecorateClass => {
+const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style }) => {
     return (target) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const customElement = class extends (target as { new (): any }) {

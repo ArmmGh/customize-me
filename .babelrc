@@ -8,5 +8,8 @@
                 "targets": "> 0.25%, not dead"
             }
         ]
+    ],
+    "ignore": [
+        "src/global/types.ts"
     ]
 }
