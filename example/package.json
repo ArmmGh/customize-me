@@ -1,0 +1,27 @@
+{
+    "name": "demo-customize-me",
+    "version": "1.0.0",
+    "description": "Demo of the customize-me lib",
+    "main": "index.js",
+    "repository": "https://github.com/ArmmGh/customize-me",
+    "author": "Arman Ghazaryan",
+    "license": "MIT",
+    "scripts": {
+        "lint": "eslint ../src ./components",
+        "start": "webpack-dev-server --config webpack.config.js"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.17.0",
+        "@typescript-eslint/parser": "^5.17.0",
+        "css-loader": "^6.7.1",
+        "eslint": "^8.12.0",
+        "html-webpack-plugin": "^5.5.0",
+        "node-sass": "^7.0.1",
+        "sass-loader": "^12.6.0",
+        "style-loader": "^3.3.1",
+        "ts-loader": "^9.2.8",
+        "webpack": "^5.70.0",
+        "webpack-cli": "^4.9.2",
+        "webpack-dev-server": "^4.7.4"
+    }
+}
