@@ -1,13 +1,15 @@
-# customize-me
+# customize-me :tw-267b:
 
-Create native custom elements using Typescript without using any third party libraries.
+Create native custom elements using Typescript without using any third party libraries and dependencies.
+
+[:tw-1f517: See in NPM :tw-1f517:](https://www.npmjs.com/package/customize-me "Package")
 
 ```
-npm install customize-me
+npm install customize-me --save
 ```
 or
 ```
-yarn install customize-me
+yarn install customize-me --save
 ```
 
 ## Usage
