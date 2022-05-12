@@ -4,7 +4,9 @@ Create native custom elements using Typescript without using any third party lib
 
 ```
 npm install customize-me
+```
 or
+```
 yarn install customize-me
 ```
 
