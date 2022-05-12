@@ -1,6 +1,6 @@
 {
     "name": "customize-me",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Small lib for customizing custom web components",
     "main": "./lib/index.js",
     "module": "./lib/index.js",
