@@ -10,7 +10,7 @@ exports.default = {
     },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve('../', 'dist')
+        path: path.resolve('dist')
     },
     devtool: 'inline-source-map',
     devServer: {
