@@ -6,11 +6,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 exports.default = {
     mode: 'development',
     entry: {
-        example: './example/index.ts'
+        example: './index.ts'
     },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(path.dirname('dist'))
+        path: path.resolve('../', 'dist')
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -36,7 +36,7 @@ exports.default = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './example/index.html',
+            template: './index.html',
             inject: 'body'
         })
     ]

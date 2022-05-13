@@ -11,6 +11,7 @@
     "author": "Arman Ghazaryan",
     "license": "MIT",
     "scripts": {
+        "lint": "eslint ./src ./example",
         "build": "rm -rf lib && yarn build:types && yarn build:js",
         "build:types": "tsc --project ./src/tsconfig.json --emitDeclarationOnly",
         "build:js": "./node_modules/.bin/babel src --out-dir lib --extensions \".ts\" --source-maps inline"
@@ -28,6 +29,9 @@
         "@babel/core": "^7.17.10",
         "@babel/preset-env": "^7.17.10",
         "@babel/preset-typescript": "^7.16.7",
-        "typescript": "^4.6.3"
+        "typescript": "^4.6.3",
+        "@typescript-eslint/eslint-plugin": "^5.23.0",
+        "@typescript-eslint/parser": "^5.17.0",
+        "eslint": "^8.12.0"
     }
 }
