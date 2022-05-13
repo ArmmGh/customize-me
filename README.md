@@ -9,7 +9,7 @@ npm install customize-me --save
 ```
 or
 ```
-yarn install customize-me --save
+yarn add customize-me --save
 ```
 
 ## Usage
