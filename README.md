@@ -20,7 +20,8 @@ import { CustomizeMe } from 'customize-me';
 @CustomizeMe({
   selector: 'action-button',
   template: '<button>Click me!!</button>',
-  style: ` :host { color: #333 }`
+  style: ` :host { color: #333 }`,
+  useShadow: true // for making components and their styles encapsulated
 })
 export class ActionButton extends HTMLElement {
   // full source code is at example/action-button
