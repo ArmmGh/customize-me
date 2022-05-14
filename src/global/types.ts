@@ -44,10 +44,6 @@ export type ConstructorWithProps = {
         };
 };
 export type $Prop = string;
-// export type $Prop = {
-//     name: string;
-//     value: unknown;
-// };
 
 /* Listen */
 export type ConstructorWithListeners = {
