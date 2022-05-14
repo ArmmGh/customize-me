@@ -1,6 +1,6 @@
 {
     "name": "customize-me",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Create native custom elements",
     "main": "lib/index.js",
     "module": "lib/index.js",
