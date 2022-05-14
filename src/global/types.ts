@@ -40,13 +40,14 @@ export type watcher = {
 export type ConstructorWithProps = {
     constructor: CustomElementConstructor &
         HTMLElement & {
-            $props: $Prop[];
+            $props: Set<$Prop>;
         };
 };
-export type $Prop = {
-    name: string;
-    value: unknown;
-};
+export type $Prop = string;
+// export type $Prop = {
+//     name: string;
+//     value: unknown;
+// };
 
 /* Listen */
 export type ConstructorWithListeners = {

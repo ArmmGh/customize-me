@@ -6,7 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 exports.default = {
     mode: 'development',
     entry: {
-        example: './index.ts'
+        example: './index.ts',
+        src: '../src/index.ts'
     },
     output: {
         filename: '[name].bundle.js',

@@ -1,9 +1,10 @@
+import { Prop } from '../../../lib';
 import { CustomizeMe, Dispatch, Listen } from '../../../src';
 import { EventEmitter } from '../../../src/global/types';
 
 @CustomizeMe({
     selector: 'action-button',
-    template: '<button>npm install</button>',
+    template: '<button>{{actionText}}</button>',
     style: `
     :host {
         width: 250px;
@@ -111,11 +112,14 @@ export class ActionButton extends HTMLElement {
         super();
     }
 
+    @Prop()
+    actionText = 'npm install';
+
     @Listen('click')
-    onButtonClick() {
+    onButtonClick() {        
         this.onInstall.emit();
     }
 
-    @Dispatch('onInstall', document.getElementById('info-box'))
+    @Dispatch('onInstall')
     onInstall: EventEmitter;
 }

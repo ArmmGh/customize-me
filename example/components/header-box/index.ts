@@ -3,7 +3,7 @@ import { CustomizeMe, Prop, Watch } from '../../../src';
 @CustomizeMe({
     selector: 'header-box',
     template: `
-        <h1>Customize me</h1>
+        <h1>{{ message }} Customize me</h1>
    `,
    style: `
         h1 {

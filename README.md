@@ -59,13 +59,14 @@ Define element in HTML
 | @Watch()    | method   | (property)         | triggers the method when a `property` is changed. (property should be defined with @Prop decorator)                                                                                                                                  |
 | @Listen()   | method   | (eventName, selector?) | listens to an `event` or `custom event` on the `host` element or on the `selector` if specified                                                                                                     |
 
-### @Prop() and @Watch()
-Since `message` was defined with @Prop() its value change event can be watched using @Watch() decorator
+### @Prop(), @Watch() and {{}} *notation*
+Since `message` was defined with @Prop() its value change event can be watched using @Watch() decorator, and we can see its initial value inside template using **{{ mesage }}** notation
 ```ts
 import { CustomizeMe, Prop, Watch } from 'customize-me';
 
 @CustomizeMe({
   selector: 'header-box',
+  template: `{{ message }} World!`
   ...
 })
 export class HeaderBox extends HTMLElement {
@@ -75,9 +76,10 @@ export class HeaderBox extends HTMLElement {
   }
 
   @Prop()
-  public message = 'Hola';
+  public message = 'Hello';
 }
 ```
+**In future reactive binding**...
 
 ### @Dispatch()
 

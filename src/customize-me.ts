@@ -1,4 +1,4 @@
-import { ConstructorWithListeners, ComponentDecorator } from './global/types';
+import { ConstructorWithListeners, ComponentDecorator, ConstructorWithProps } from './global/types';
 import { selectorValidator, templateValidator } from './global/validators';
 
 const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style }) => {
@@ -34,6 +34,7 @@ const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style 
                 if (target.constructor.getListeners) {
                     const listeners = target.constructor.getListeners() || [];
                     const root = target.shadowRoot || target;
+                    
                     for (const listener of listeners) {
                         const eventTarget = listener.selector ? root.querySelector(listener.selector) : root;
                         eventTarget?.addEventListener(listener.eventName, (event: Event) => {
@@ -44,9 +45,18 @@ const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style 
             }
 
             private render() {
+                const $props = (this as unknown as HTMLElement & ConstructorWithProps).constructor.$props;
+                if ($props?.size) {
+                    for (const prop of $props) {
+                        const regex = new RegExp(`{{[ ]*${prop}[ ]*}}`, 'g');
+                        const value = this.constructor[`{{${prop}}}`];
+                        template = template.replace(regex, typeof value === 'string' ? value : JSON.stringify(value));
+                    }
+                }
                 const templateElement: HTMLTemplateElement = this.createTemplateWithStyles(template, style);
                 const copyOfTemplate: DocumentFragment = document.importNode(templateElement.content, true);
                 const context = useShadow ? this.attachShadow({ mode: 'open' }) : this;
+
                 context.appendChild(copyOfTemplate);
             }
         };

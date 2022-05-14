@@ -20,5 +20,5 @@ export const propertyValidator = (property: $Prop): boolean => {
     if (!property) {
         return true;
     }
-    throw new Error(`Property with name ${property.name} already exists!`);
+    throw new Error(`Property with name ${property} already exists!`);
 };
