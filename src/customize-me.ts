@@ -11,8 +11,8 @@ const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style 
 
             connectedCallback() {
                 this.validateMetadata(selector, template);
-                this.attachListeners();
                 this.render();
+                this.attachListeners();
                 super.connectedCallback && super.connectedCallback();
             }
 
@@ -36,7 +36,6 @@ const CustomizeMe: ComponentDecorator = ({ selector, template, useShadow, style 
                     const root = target.shadowRoot || target;
                     for (const listener of listeners) {
                         const eventTarget = listener.selector ? root.querySelector(listener.selector) : root;
-
                         eventTarget?.addEventListener(listener.eventName, (event: Event) => {
                             listener.handler.call(target, event);
                         });
